@@ -1,6 +1,7 @@
 
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
+from sourcing_agent import source_candidates
 
 app = Flask(__name__)
 
@@ -20,7 +21,8 @@ def whatsapp_webhook():
             msg.body("❌ Please mention the role after 'Find', e.g. 'Find Java Developer'")
         else:
             msg.body(f"✅ Sourcing started for: {role}...\n🔍 Searching LinkedIn company pages…")
-            print(f"[AI-Agent Triggered] Role to search: {role}")
+            result = source_candidates(role)
+            msg.body(f"Here are the shortlisted candidates:\n\n{result}")
     else:
         msg.body("👋 Type 'Find [Role]' to start sourcing.\nExample: Find Java Developer")
 
