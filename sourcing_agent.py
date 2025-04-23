@@ -38,12 +38,16 @@ def ask_gpt_to_filter(candidates, role):
     Candidates:
     {candidates}
     """
-    response = openai.Completion.create(
-      engine="text-davinci-003",
-      prompt=prompt,
-      max_tokens=500
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are an AI assistant helping shortlist candidates."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.7,
+        max_tokens=500
     )
-    return response.choices[0].text.strip()
+    return response.choices[0].message["content"].strip()
 
 def source_candidates(role):
     print(f"🔍 Searching companies for {role}...")
