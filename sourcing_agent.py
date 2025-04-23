@@ -1,9 +1,9 @@
-
 import requests
 from bs4 import BeautifulSoup
 import openai
 import os
 
+# ✅ OpenAI API Key set from environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY") or "YOUR_OPENAI_API_KEY"
 
 def search_company_pages(role):
@@ -18,9 +18,10 @@ def search_company_pages(role):
         href = a.get('href')
         if 'linkedin.com/company' in href:
             links.append(href.split('&')[0].replace('/url?q=', ''))
-    return list(set(links))[:5]
+    return list(set(links))[:5]  # Top 5 unique company LinkedIn URLs
 
 def scrape_candidates_from_page(company_url, role):
+    # ✅ Dummy data for now (we'll replace this with real scraping later)
     dummy_employees = [
         "Aman Sharma - Java Developer",
         "Priya Singh - Senior Java Developer",
